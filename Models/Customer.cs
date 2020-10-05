@@ -35,11 +35,8 @@ namespace Healthy_Me.Models
         [Display(Name = "Weight")]
         public double weight { get; set; }
 
-        [Display(Name = "Street Name")]
-        public string streetName { get; set; }
-
-        [Display(Name = "House Number")]
-        public int houseNumber { get; set; }
+        [Display(Name = "Street Address")]
+        public string streetAddress { get; set; }
 
         [Display(Name = "Zip Code")]
         public int zipCode { get; set; }
@@ -49,6 +46,16 @@ namespace Healthy_Me.Models
 
         [Display(Name = "State")]
         public string state { get; set; }
+
+        [Display(Name = "Fitness goal start date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? StartDate { get; set; }
+
+        [Display(Name = "Fitness goal end date")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
+        public DateTime? EndDate { get; set; }
 
 
 
