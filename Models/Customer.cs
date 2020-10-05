@@ -47,17 +47,10 @@ namespace Healthy_Me.Models
         [Display(Name = "State")]
         public string state { get; set; }
 
-        [Display(Name = "Fitness goal start date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? StartDate { get; set; }
-
-        [Display(Name = "Fitness goal end date")]
-        [DataType(DataType.Date)]
-        [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime? EndDate { get; set; }
+        
 
 
+        
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
