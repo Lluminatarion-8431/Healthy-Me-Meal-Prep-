@@ -28,7 +28,7 @@ namespace Healthy_Me
                 else if (_claimsPrincipal.IsInRole("Employee"))
                 {
                     context.Result = new RedirectToActionResult("Index",
-                    "Employees", null);
+                    "Admins", null);
                 }
             }
         }
