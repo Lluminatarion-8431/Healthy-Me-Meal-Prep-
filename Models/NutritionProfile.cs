@@ -13,7 +13,7 @@ namespace Healthy_Me.Models
         public int Id { get; set; }
 
         [Display(Name = "Food Allergies")]
-        public string foodAllergies { get; set; }
+        public string foodAllegies { get; set; }
 
         [Display(Name = "Nutritional Goal")]
         public string goal { get; set; }
