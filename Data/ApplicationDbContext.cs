@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Healthy_Me.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -23,9 +24,15 @@ namespace Healthy_Me.Data
             {
                 Name = "Admin",
                 NormalizedName = "ADMIN"
+            },
+            new IdentityRole
+            {
+                Name = "Customer",
+                NormalizedName = "CUSTOMER"
             }
             );
         }
-
+        public DbSet<Customer> Customers { get; set; }
+        public DbSet<Admin> Admin { get; set; }
     }
 }
