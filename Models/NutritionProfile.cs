@@ -31,7 +31,5 @@ namespace Healthy_Me.Models
         [ForeignKey("Customer")]
         public int? CustomerId { get; set; }
         public Customer customer { get; set; }
-
-
     }
 }
