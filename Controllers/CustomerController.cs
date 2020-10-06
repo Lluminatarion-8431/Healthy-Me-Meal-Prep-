@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Healthy_Me.Data;
+using Healthy_Me.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -34,50 +35,85 @@ namespace Healthy_Me.Controllers
         }
 
         // GET: Customer/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Customer customer)
         {
-            return View();
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
         }
 
         // GET: Customer/Create
         public ActionResult Create()
         {
-            return View();
+            Customer customer = new Customer();
+
+            return View(customer);
         }
+    
 
         // POST: Customer/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Customer customer)
         {
-            try
+
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                customer.IdentityUserId = userId;
+                _context.Add(customer);
+                _context.SaveChanges();
+                return RedirectToAction("Create", "NutritionProfile");
+                
             }
-            catch
-            {
-                return View();
-            }
+            
+            
+            return RedirectToAction("Details");
         }
 
         // GET: Customer/Edit/5
         public ActionResult Edit(int id)
         {
-            return View();
+            var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+
+            if (customer == null)
+            {
+                return NotFound();
+            }
+
+            return View(customer);
         }
 
         // POST: Customer/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(int? id)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var customerFromDb = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+
+                
+
+                _context.Update(customerFromDb);
+                _context.SaveChanges();
+                return RedirectToAction("Details", customerFromDb);
+
+
+
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 
