@@ -44,13 +44,16 @@ namespace Healthy_Me.Models
 
         [Display(Name = "State")]
         public string state { get; set; }
-        
-       
 
-        
+        [ForeignKey("Nutrition Profile")]
+        public int? NutritionProfileId { get; set; }
+        public NutritionProfile nutritionProfile { get; set; }
 
 
-        
+
+
+
+
 
         [ForeignKey("IdentityUser")]
         public string IdentityUserId { get; set; }
