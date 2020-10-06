@@ -7,27 +7,27 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Healthy_Me.Controllers
 {
-    public class AdminController : Controller
+    public class NutritionProfileController : Controller
     {
-        // GET: Admin
+        // GET: NutritionProfile
         public ActionResult Index()
         {
             return View();
         }
 
-        // GET: Admin/Details/5
+        // GET: NutritionProfile/Details/5
         public ActionResult Details(int id)
         {
             return View();
         }
 
-        // GET: Admin/Create
+        // GET: NutritionProfile/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Admin/Create
+        // POST: NutritionProfile/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
@@ -42,13 +42,13 @@ namespace Healthy_Me.Controllers
             }
         }
 
-        // GET: Admin/Edit/5
+        // GET: NutritionProfile/Edit/5
         public ActionResult Edit(int id)
         {
             return View();
         }
 
-        // POST: Admin/Edit/5
+        // POST: NutritionProfile/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Edit(int id, IFormCollection collection)
@@ -63,13 +63,13 @@ namespace Healthy_Me.Controllers
             }
         }
 
-        // GET: Admin/Delete/5
+        // GET: NutritionProfile/Delete/5
         public ActionResult Delete(int id)
         {
             return View();
         }
 
-        // POST: Admin/Delete/5
+        // POST: NutritionProfile/Delete/5
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Delete(int id, IFormCollection collection)
