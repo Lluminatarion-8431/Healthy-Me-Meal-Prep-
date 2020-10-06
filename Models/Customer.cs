@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using System;
 using System.Collections.Generic;
 
@@ -46,6 +47,8 @@ namespace Healthy_Me.Models
 
         [Display(Name = "State")]
         public string state { get; set; }
+        
+       
 
         
 
