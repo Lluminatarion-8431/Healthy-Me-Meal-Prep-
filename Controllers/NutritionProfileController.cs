@@ -1,7 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Healthy_Me.Data;
+using Healthy_Me.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +12,11 @@ namespace Healthy_Me.Controllers
 {
     public class NutritionProfileController : Controller
     {
+        private readonly ApplicationDbContext _context;
+        public NutritionProfileController(ApplicationDbContext Context)
+        {
+            _context = Context;
+        }
         // GET: NutritionProfile
         public ActionResult Index()
         {
@@ -24,22 +32,32 @@ namespace Healthy_Me.Controllers
         // GET: NutritionProfile/Create
         public ActionResult Create()
         {
-            return View();
+            NutritionProfile nutritionProfile = new NutritionProfile();
+
+            return View(nutritionProfile);
         }
 
         // POST: NutritionProfile/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(NutritionProfile nutritionProfile)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                //_context.Add(address);
+
+
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var customer = _context.Customers.Where(c => c.IdentityUserId == userId).First();
+                //customer. =;
+                _context.Customers.Update(customer);
+                _context.SaveChanges();
+
+
+                return RedirectToAction("Index", "Customer");
+
             }
-            catch
-            {
-                return View();
-            }
+            return View(nutritionProfile);
         }
 
         // GET: NutritionProfile/Edit/5
