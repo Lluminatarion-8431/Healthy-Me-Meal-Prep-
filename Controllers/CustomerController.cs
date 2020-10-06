@@ -124,7 +124,7 @@ namespace Healthy_Me.Controllers
         }
 
         // GET: Customer/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
             var customer = _context.Customers.SingleOrDefault(c => c.Id == id);
             if (id == null)
@@ -144,14 +144,23 @@ namespace Healthy_Me.Controllers
         // POST: Customer/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int? id)
+        public ActionResult Edit(Customer customer)
         {
             try
             {
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var customerFromDb = _context.Customers.Where(c => c.IdentityUserId == userId).SingleOrDefault();
+                customerFromDb.firstName = customer.firstName;
+                customerFromDb.lastName = customer.lastName;
+                customerFromDb.goal = customer.goal;
+                customerFromDb.age = customer.age;
+                customerFromDb.streetAddress = customer.streetAddress;
+                customerFromDb.city = customer.city;
+                customerFromDb.state = customer.state;
+                customerFromDb.zipCode = customer.zipCode;
 
-                
+
+
 
                 _context.Update(customerFromDb);
                 _context.SaveChanges();

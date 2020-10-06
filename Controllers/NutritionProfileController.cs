@@ -49,7 +49,7 @@ namespace Healthy_Me.Controllers
 
                 var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
                 var customer = _context.Customers.Where(c => c.IdentityUserId == userId).First();
-                //customer. =;
+                customer.nutritionProfile = nutritionProfile;
                 _context.Customers.Update(customer);
                 _context.SaveChanges();
 
