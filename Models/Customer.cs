@@ -33,9 +33,6 @@ namespace Healthy_Me.Models
         [Display(Name = "Height")]
         public double height { get; set; }
 
-        [Display(Name = "Weight")]
-        public double weight { get; set; }
-
         [Display(Name = "Street Address")]
         public string streetAddress { get; set; }
 

@@ -33,6 +33,8 @@ namespace Healthy_Me.Data
             );
         }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Admin> Admin { get; set; }
+        public DbSet<Admin> Admins { get; set; }
+
+        public DbSet<NutritionProfile> NutritionProfiles { get; set; }
     }
 }
