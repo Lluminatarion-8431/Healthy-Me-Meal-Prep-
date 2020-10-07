@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Healthy_Me.Data;
@@ -12,11 +13,16 @@ namespace Healthy_Me.Controllers
 {
     public class NutritionProfileController : Controller
     {
+        public static HttpClient recipeAPI = new HttpClient();
         private readonly ApplicationDbContext _context;
         public NutritionProfileController(ApplicationDbContext Context)
         {
             _context = Context;
         }
+        //private async Task GetToDoItems()
+        //{
+          //  string response = await recipeAPI.GetStringAsync("");
+        //}
         // GET: NutritionProfile
         public ActionResult Index()
         {
