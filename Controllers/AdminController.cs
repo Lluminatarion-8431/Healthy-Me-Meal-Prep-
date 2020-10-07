@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
+using Healthy_Me.Data;
+using Healthy_Me.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -10,23 +13,40 @@ namespace Healthy_Me.Controllers
 {
     public class AdminController : Controller
     {
+        private readonly ApplicationDbContext _context;
+
+        public AdminController(ApplicationDbContext Context)
+        {
+            _context = Context;
+        }
         // GET: Admin
         public ActionResult Index()
         {
-            return View();
+            var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var admin = _context.Admins.Where(a => a.IdentityUserId ==
+            userId).SingleOrDefault();
+
+            if (admin == null)
+            {
+
+                return RedirectToAction("Create");
+
+            }
+            return View("Details", admin);
         }
 
         // GET: Admin/Details/5
-        public ActionResult Details(int id)
+        public ActionResult Details(Admin admin)
         {
-            return View();
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return View(admin);
         }
 
-        // GET: Admin/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        
 
         [HttpPost("FileUpload")]
         public async Task<IActionResult> Create(List<IFormFile> files)
@@ -76,26 +96,48 @@ namespace Healthy_Me.Controllers
             return Ok(new { count = files.Count, size, filePaths });
         }
 
+        // GET: Admin/Create
+        public ActionResult Create()
+        {
+            Admin admin = new Admin();
+            return View(admin);
+        }
 
         // POST: Admin/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public ActionResult Create(Admin admin)
         {
-            try
+            if (ModelState.IsValid)
             {
-                return RedirectToAction(nameof(Index));
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                admin.IdentityUserId = userId;
+                _context.Add(admin);
+                _context.SaveChanges();
+                return RedirectToAction("Index");
+
             }
-            catch
-            {
-                return View();
-            }
+
+
+            return RedirectToAction("Details");
         }
 
         // GET: Admin/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            var admin = _context.Admins.SingleOrDefault(a => a.Id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+
+            if (admin == null)
+            {
+                return NotFound();
+            }
+
+            return View(admin);
         }
 
 
@@ -107,15 +149,28 @@ namespace Healthy_Me.Controllers
         // POST: Admin/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(Admin admin)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var adminFromDb = _context.Customers.Where(a => a.IdentityUserId == userId).SingleOrDefault();
+                adminFromDb.firstName = admin.firstName;
+                adminFromDb.lastName = admin.lastName;
+                
+
+
+
+                _context.Update(adminFromDb);
+                _context.SaveChanges();
+                return RedirectToAction("Details", adminFromDb);
+
+
+
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 
