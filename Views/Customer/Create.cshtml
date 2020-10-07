@@ -10,7 +10,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form method="post" enctype="multipart/form-data" asp-controller="FileUpload" asp-action="Create">
+        <form method="post" enctype="multipart/form-data" asp-controller="Customer" asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="firstName" class="control-label"></label>
@@ -80,7 +80,7 @@
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Details">Back to List</a>
 </div>
 
 @section Scripts {
