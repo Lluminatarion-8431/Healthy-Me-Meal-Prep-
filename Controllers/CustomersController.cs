@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Healthy_Me.Controllers
 {
-    public class CustomerController : Controller
+    public class CustomersController : Controller
     {
         private readonly ApplicationDbContext _context;
 
-        public CustomerController(ApplicationDbContext context)
+        public CustomersController(ApplicationDbContext context)
         {
             _context = context;
         }
@@ -69,7 +69,7 @@ namespace Healthy_Me.Controllers
                 customer.IdentityUserId = userId;
                 _context.Add(customer);
                 _context.SaveChanges();
-                return RedirectToAction("Create", "NutritionProfile");
+                return RedirectToAction("Create", "NutritionProfiles");
                 
             }
             
