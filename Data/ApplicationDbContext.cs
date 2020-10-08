@@ -20,11 +20,7 @@ namespace Healthy_Me.Data
             base.OnModelCreating(builder);
             builder.Entity<IdentityRole>()
             .HasData(
-            new IdentityRole
-            {
-                Name = "Admin",
-                NormalizedName = "ADMIN"
-            },
+            
             new IdentityRole
             {
                 Name = "Customer",
@@ -33,7 +29,6 @@ namespace Healthy_Me.Data
             );
         }
         public DbSet<Customer> Customers { get; set; }
-        public DbSet<Admin> Admins { get; set; }
 
         public DbSet<NutritionProfile> NutritionProfiles { get; set; }
     }
