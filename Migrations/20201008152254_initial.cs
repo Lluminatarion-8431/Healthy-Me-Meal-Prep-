@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Healthy_Me.Migrations
 {
-    public partial class init : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -47,6 +47,24 @@ namespace Healthy_Me.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "NutritionProfiles",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    foodAllergies = table.Column<string>(nullable: true),
+                    goal = table.Column<string>(nullable: true),
+                    StartDate = table.Column<DateTime>(nullable: true),
+                    EndDate = table.Column<DateTime>(nullable: true),
+                    startingWeight = table.Column<double>(nullable: false),
+                    endingWeight = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_NutritionProfiles", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "AspNetRoleClaims",
                 columns: table => new
                 {
@@ -65,27 +83,6 @@ namespace Healthy_Me.Migrations
                         principalTable: "AspNetRoles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Admins",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    firstName = table.Column<string>(nullable: true),
-                    lastName = table.Column<string>(nullable: true),
-                    IdentityUserId = table.Column<string>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Admins", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Admins_AspNetUsers_IdentityUserId",
-                        column: x => x.IdentityUserId,
-                        principalTable: "AspNetUsers",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,6 +185,7 @@ namespace Healthy_Me.Migrations
                     zipCode = table.Column<int>(nullable: false),
                     city = table.Column<string>(nullable: true),
                     state = table.Column<string>(nullable: true),
+                    NutritionProfileId = table.Column<int>(nullable: true),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
@@ -199,29 +197,10 @@ namespace Healthy_Me.Migrations
                         principalTable: "AspNetUsers",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "NutritionProfiles",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    foodAllergies = table.Column<string>(nullable: true),
-                    goal = table.Column<string>(nullable: true),
-                    StartDate = table.Column<DateTime>(nullable: true),
-                    EndDate = table.Column<DateTime>(nullable: true),
-                    startingWeight = table.Column<double>(nullable: false),
-                    endingWeight = table.Column<double>(nullable: false),
-                    CustomerId = table.Column<int>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_NutritionProfiles", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_NutritionProfiles_Customers_CustomerId",
-                        column: x => x.CustomerId,
-                        principalTable: "Customers",
+                        name: "FK_Customers_NutritionProfiles_NutritionProfileId",
+                        column: x => x.NutritionProfileId,
+                        principalTable: "NutritionProfiles",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -229,17 +208,12 @@ namespace Healthy_Me.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "f4b258f7-d3aa-4ba2-bffb-d8741037cdbb", "e7f49cc8-7177-4af3-9a8f-27cdbcb5d645", "Admin", "ADMIN" });
+                values: new object[] { "5d5bdfa6-af85-4615-8191-c14259789330", "1cb7356c-3aaf-44e9-a496-ab23d847de3d", "Admin", "ADMIN" });
 
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "133b2e78-6443-49ac-9343-b2117c4e569b", "fe0d45e3-80ea-4f23-9242-37062fb5a398", "Customer", "CUSTOMER" });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Admins_IdentityUserId",
-                table: "Admins",
-                column: "IdentityUserId");
+                values: new object[] { "eab54818-d74d-401c-b114-7f3eda4dec9d", "ff3f5b58-dfb9-421c-8d9f-659bbbe5369f", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -286,16 +260,13 @@ namespace Healthy_Me.Migrations
                 column: "IdentityUserId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_NutritionProfiles_CustomerId",
-                table: "NutritionProfiles",
-                column: "CustomerId");
+                name: "IX_Customers_NutritionProfileId",
+                table: "Customers",
+                column: "NutritionProfileId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropTable(
-                name: "Admins");
-
             migrationBuilder.DropTable(
                 name: "AspNetRoleClaims");
 
@@ -312,16 +283,16 @@ namespace Healthy_Me.Migrations
                 name: "AspNetUserTokens");
 
             migrationBuilder.DropTable(
-                name: "NutritionProfiles");
+                name: "Customers");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
 
             migrationBuilder.DropTable(
-                name: "Customers");
+                name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "AspNetUsers");
+                name: "NutritionProfiles");
         }
     }
 }

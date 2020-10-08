@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Healthy_Me.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201006181829_init")]
-    partial class init
+    [Migration("20201008152254_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -20,29 +20,6 @@ namespace Healthy_Me.Migrations
                 .HasAnnotation("ProductVersion", "3.1.8")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-            modelBuilder.Entity("Healthy_Me.Models.Admin", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<string>("IdentityUserId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<string>("firstName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("lastName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdentityUserId");
-
-                    b.ToTable("Admins");
-                });
 
             modelBuilder.Entity("Healthy_Me.Models.Customer", b =>
                 {
@@ -53,6 +30,9 @@ namespace Healthy_Me.Migrations
 
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
+
+                    b.Property<int?>("NutritionProfileId")
+                        .HasColumnType("int");
 
                     b.Property<double>("age")
                         .HasColumnType("float");
@@ -85,6 +65,8 @@ namespace Healthy_Me.Migrations
 
                     b.HasIndex("IdentityUserId");
 
+                    b.HasIndex("NutritionProfileId");
+
                     b.ToTable("Customers");
                 });
 
@@ -94,9 +76,6 @@ namespace Healthy_Me.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CustomerId")
-                        .HasColumnType("int");
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
@@ -117,8 +96,6 @@ namespace Healthy_Me.Migrations
                         .HasColumnType("float");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("CustomerId");
 
                     b.ToTable("NutritionProfiles");
                 });
@@ -152,15 +129,15 @@ namespace Healthy_Me.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "f4b258f7-d3aa-4ba2-bffb-d8741037cdbb",
-                            ConcurrencyStamp = "e7f49cc8-7177-4af3-9a8f-27cdbcb5d645",
+                            Id = "5d5bdfa6-af85-4615-8191-c14259789330",
+                            ConcurrencyStamp = "1cb7356c-3aaf-44e9-a496-ab23d847de3d",
                             Name = "Admin",
                             NormalizedName = "ADMIN"
                         },
                         new
                         {
-                            Id = "133b2e78-6443-49ac-9343-b2117c4e569b",
-                            ConcurrencyStamp = "fe0d45e3-80ea-4f23-9242-37062fb5a398",
+                            Id = "eab54818-d74d-401c-b114-7f3eda4dec9d",
+                            ConcurrencyStamp = "ff3f5b58-dfb9-421c-8d9f-659bbbe5369f",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -335,25 +312,15 @@ namespace Healthy_Me.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Healthy_Me.Models.Admin", b =>
-                {
-                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
-                        .WithMany()
-                        .HasForeignKey("IdentityUserId");
-                });
-
             modelBuilder.Entity("Healthy_Me.Models.Customer", b =>
                 {
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
-                });
 
-            modelBuilder.Entity("Healthy_Me.Models.NutritionProfile", b =>
-                {
-                    b.HasOne("Healthy_Me.Models.Customer", "customer")
+                    b.HasOne("Healthy_Me.Models.NutritionProfile", "nutritionProfile")
                         .WithMany()
-                        .HasForeignKey("CustomerId");
+                        .HasForeignKey("NutritionProfileId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
