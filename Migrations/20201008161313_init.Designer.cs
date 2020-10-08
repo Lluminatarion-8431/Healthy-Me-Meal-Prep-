@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Healthy_Me.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201008152254_initial")]
-    partial class initial
+    [Migration("20201008161313_init")]
+    partial class init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -129,15 +129,8 @@ namespace Healthy_Me.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "5d5bdfa6-af85-4615-8191-c14259789330",
-                            ConcurrencyStamp = "1cb7356c-3aaf-44e9-a496-ab23d847de3d",
-                            Name = "Admin",
-                            NormalizedName = "ADMIN"
-                        },
-                        new
-                        {
-                            Id = "eab54818-d74d-401c-b114-7f3eda4dec9d",
-                            ConcurrencyStamp = "ff3f5b58-dfb9-421c-8d9f-659bbbe5369f",
+                            Id = "a1f52fe7-e2d1-4a42-93d9-6e68c16cf2f1",
+                            ConcurrencyStamp = "678da5c4-c1a7-4610-ba96-d10b570079ce",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
