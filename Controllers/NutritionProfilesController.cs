@@ -11,11 +11,11 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Healthy_Me.Controllers
 {
-    public class NutritionProfileController : Controller
+    public class NutritionProfilesController : Controller
     {
         public static HttpClient recipeAPI = new HttpClient();
         private readonly ApplicationDbContext _context;
-        public NutritionProfileController(ApplicationDbContext Context)
+        public NutritionProfilesController(ApplicationDbContext Context)
         {
             _context = Context;
         }
@@ -60,7 +60,7 @@ namespace Healthy_Me.Controllers
                 _context.SaveChanges();
 
 
-                return RedirectToAction("Index", "Customer");
+                return RedirectToAction("Index", "Customers");
 
             }
             return View(nutritionProfile);
