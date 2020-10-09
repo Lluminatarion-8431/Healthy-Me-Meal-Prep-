@@ -18,7 +18,7 @@ namespace Healthy_Me.Controllers
 
         public CustomersController(ApplicationDbContext context)
         {
-            JToken
+           
             _context = context;
         }
         // GET: Customer
