@@ -49,7 +49,9 @@ namespace Healthy_Me.Models
         public int? NutritionProfileId { get; set; }
         public NutritionProfile nutritionProfile { get; set; }
 
-
+        [ForeignKey("Hydration Log")]
+        public int? HydrationLogId { get; set; }
+        public HydrationLog hydrationLog { get; set; }
 
 
 

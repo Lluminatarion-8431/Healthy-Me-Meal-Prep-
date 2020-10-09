@@ -47,6 +47,22 @@ namespace Healthy_Me.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "HydrationLogs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    drankOneLiter = table.Column<bool>(nullable: false),
+                    drankSecondLiter = table.Column<bool>(nullable: false),
+                    drankThirdLiter = table.Column<bool>(nullable: false),
+                    drankFourthLiter = table.Column<bool>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_HydrationLogs", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "NutritionProfiles",
                 columns: table => new
                 {
@@ -188,11 +204,18 @@ namespace Healthy_Me.Migrations
                     city = table.Column<string>(nullable: true),
                     state = table.Column<string>(nullable: true),
                     NutritionProfileId = table.Column<int>(nullable: true),
+                    HydrationLogId = table.Column<int>(nullable: true),
                     IdentityUserId = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Customers", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Customers_HydrationLogs_HydrationLogId",
+                        column: x => x.HydrationLogId,
+                        principalTable: "HydrationLogs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Customers_AspNetUsers_IdentityUserId",
                         column: x => x.IdentityUserId,
@@ -210,7 +233,7 @@ namespace Healthy_Me.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "230cac21-784e-47e7-acb8-23abc4686e94", "6d6365dc-e2eb-44e1-b10f-a485fe0033ab", "Customer", "CUSTOMER" });
+                values: new object[] { "94238e2b-1448-40e6-9864-bfaf33a02693", "f33c8fbf-232e-4dc7-8a1b-5543fde14d88", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -252,6 +275,11 @@ namespace Healthy_Me.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Customers_HydrationLogId",
+                table: "Customers",
+                column: "HydrationLogId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Customers_IdentityUserId",
                 table: "Customers",
                 column: "IdentityUserId");
@@ -284,6 +312,9 @@ namespace Healthy_Me.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");
+
+            migrationBuilder.DropTable(
+                name: "HydrationLogs");
 
             migrationBuilder.DropTable(
                 name: "AspNetUsers");

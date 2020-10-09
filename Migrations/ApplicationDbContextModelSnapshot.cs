@@ -26,6 +26,9 @@ namespace Healthy_Me.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int?>("HydrationLogId")
+                        .HasColumnType("int");
+
                     b.Property<string>("IdentityUserId")
                         .HasColumnType("nvarchar(450)");
 
@@ -61,11 +64,37 @@ namespace Healthy_Me.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("HydrationLogId");
+
                     b.HasIndex("IdentityUserId");
 
                     b.HasIndex("NutritionProfileId");
 
                     b.ToTable("Customers");
+                });
+
+            modelBuilder.Entity("Healthy_Me.Models.HydrationLog", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("drankFourthLiter")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("drankOneLiter")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("drankSecondLiter")
+                        .HasColumnType("bit");
+
+                    b.Property<bool>("drankThirdLiter")
+                        .HasColumnType("bit");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("HydrationLogs");
                 });
 
             modelBuilder.Entity("Healthy_Me.Models.NutritionProfile", b =>
@@ -133,8 +162,8 @@ namespace Healthy_Me.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "230cac21-784e-47e7-acb8-23abc4686e94",
-                            ConcurrencyStamp = "6d6365dc-e2eb-44e1-b10f-a485fe0033ab",
+                            Id = "94238e2b-1448-40e6-9864-bfaf33a02693",
+                            ConcurrencyStamp = "f33c8fbf-232e-4dc7-8a1b-5543fde14d88",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });
@@ -311,6 +340,10 @@ namespace Healthy_Me.Migrations
 
             modelBuilder.Entity("Healthy_Me.Models.Customer", b =>
                 {
+                    b.HasOne("Healthy_Me.Models.HydrationLog", "hydrationLog")
+                        .WithMany()
+                        .HasForeignKey("HydrationLogId");
+
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "IdentityUser")
                         .WithMany()
                         .HasForeignKey("IdentityUserId");
