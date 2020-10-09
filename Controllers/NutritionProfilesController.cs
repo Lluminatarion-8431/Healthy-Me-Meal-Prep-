@@ -64,23 +64,47 @@ namespace Healthy_Me.Controllers
         }
 
         // GET: NutritionProfile/Edit/5
-        public ActionResult Edit(int id)
+        public ActionResult Edit(int? id)
         {
-            return View();
+            var nutritionProfile = _context.NutritionProfiles.SingleOrDefault(c => c.Id == id);
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+
+            if (nutritionProfile == null)
+            {
+                return NotFound();
+            }
+
+            return View(nutritionProfile);
         }
 
         // POST: NutritionProfile/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        public ActionResult Edit(NutritionProfile nutritionProfile)
         {
             try
             {
-                return RedirectToAction(nameof(Index));
+                var userId = this.User.FindFirstValue(ClaimTypes.NameIdentifier);
+                var customer = _context.Customers.Where(c => c.IdentityUserId == userId).First();
+                customer.nutritionProfile = nutritionProfile;
+                _context.Customers.Update(customer);
+                _context.SaveChanges();
+
+
+
+
+                return RedirectToAction("Details");
+
+
+
             }
             catch
             {
-                return View();
+                return RedirectToAction("Index");
             }
         }
 
