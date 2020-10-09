@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Healthy_Me.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20201008161313_init")]
-    partial class init
+    [Migration("20201009162954_Init.")]
+    partial class Init
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -92,6 +92,9 @@ namespace Healthy_Me.Migrations
                     b.Property<string>("goal")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("nutritionLog")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<double>("startingWeight")
                         .HasColumnType("float");
 
@@ -129,8 +132,8 @@ namespace Healthy_Me.Migrations
                     b.HasData(
                         new
                         {
-                            Id = "a1f52fe7-e2d1-4a42-93d9-6e68c16cf2f1",
-                            ConcurrencyStamp = "678da5c4-c1a7-4610-ba96-d10b570079ce",
+                            Id = "156bd573-0524-4782-a67b-c479c60e6bf4",
+                            ConcurrencyStamp = "a3dde0c1-2765-4169-b7f6-10d0874324b1",
                             Name = "Customer",
                             NormalizedName = "CUSTOMER"
                         });

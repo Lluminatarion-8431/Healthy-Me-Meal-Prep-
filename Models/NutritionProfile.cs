@@ -33,5 +33,8 @@ namespace Healthy_Me.Models
 
         [Display(Name = "Ending Weight")]
         public double endingWeight { get; set; }
+
+        [Display(Name = "Nutritional Log")]
+        public string nutritionLog { get; set; }
     }
 }
