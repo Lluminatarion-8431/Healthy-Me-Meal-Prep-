@@ -36,5 +36,8 @@ namespace Healthy_Me.Models
 
         [Display(Name = "Nutritional Log")]
         public string nutritionLog { get; set; }
+
+        [Display(Name = "Favorite Recipes")]
+        public string favoriteRecipes { get; set; }
     }
 }

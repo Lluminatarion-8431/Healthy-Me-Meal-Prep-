@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Healthy_Me.Migrations
 {
-    public partial class Init : Migration
+    public partial class init : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -58,7 +58,8 @@ namespace Healthy_Me.Migrations
                     EndDate = table.Column<DateTime>(nullable: true),
                     startingWeight = table.Column<double>(nullable: false),
                     endingWeight = table.Column<double>(nullable: false),
-                    nutritionLog = table.Column<string>(nullable: true)
+                    nutritionLog = table.Column<string>(nullable: true),
+                    favoriteRecipes = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -209,7 +210,7 @@ namespace Healthy_Me.Migrations
             migrationBuilder.InsertData(
                 table: "AspNetRoles",
                 columns: new[] { "Id", "ConcurrencyStamp", "Name", "NormalizedName" },
-                values: new object[] { "156bd573-0524-4782-a67b-c479c60e6bf4", "a3dde0c1-2765-4169-b7f6-10d0874324b1", "Customer", "CUSTOMER" });
+                values: new object[] { "230cac21-784e-47e7-acb8-23abc4686e94", "6d6365dc-e2eb-44e1-b10f-a485fe0033ab", "Customer", "CUSTOMER" });
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
