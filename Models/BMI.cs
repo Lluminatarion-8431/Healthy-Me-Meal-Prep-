@@ -1,64 +1,46 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Healthy_Me.Models
 {
     public class BMI
     {
-
-        public class Rootobject
+        public BMI()
         {
-            public Weight weight { get; set; }
-            public Height height { get; set; }
-            public Bmi bmi { get; set; }
-            public string ideal_weight { get; set; }
-            public string surface_area { get; set; }
-            public string ponderal_index { get; set; }
-            public Bmr bmr { get; set; }
-            public Whr whr { get; set; }
-            public Whtr whtr { get; set; }
+
+        }
+        
+        public string GetBMIURL(Customer customer)
+        {
+            return $"https://bmi.p.rapidapi.com/" + PrivateAPIKeys.BMIAPIKey;
         }
 
-        public class Weight
+        public async Task<Customer> GetBMI(Customer customer)
         {
-            public string kg { get; set; }
-            public string lb { get; set; }
-        }
+            string apiUrl = GetBMIURL(customer);
 
-        public class Height
-        {
-            public string m { get; set; }
-            public string cm { get; set; }
-            public string _in { get; set; }
-            public string ftin { get; set; }
-        }
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
 
-        public class Bmi
-        {
-            public string value { get; set; }
-            public string status { get; set; }
-            public string risk { get; set; }
-            public string prime { get; set; }
-        }
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
 
-        public class Bmr
-        {
-            public string value { get; set; }
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = await response.Content.ReadAsStringAsync();
+                    JObject jsonResults = JsonConvert.DeserializeObject<JObject>(data);
+                    JToken results = jsonResults["bmi"][1];
+                    //JToken location = results["geometry"]["location"];
+                }
+            }
+            return customer;
         }
-
-        public class Whr
-        {
-            public string value { get; set; }
-            public string status { get; set; }
-        }
-
-        public class Whtr
-        {
-            public string value { get; set; }
-            public string status { get; set; }
-        }
-
     }
 }

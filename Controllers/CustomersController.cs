@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Net.Http;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Healthy_Me.Data;
 using Healthy_Me.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace Healthy_Me.Controllers
@@ -150,6 +152,38 @@ namespace Healthy_Me.Controllers
             {
                 return View();
             }
+        }
+        public string GetPlacesURL(Customer customer)
+        {
+            return $"https://maps.googleapis.com/maps/api/place/textsearch/json?query=grocery+stores+in+Milwaukee&key=" + PrivateAPIKeys.GoogleAPIKey;
+        }
+        public async Task<Customer> GetPlaces(Customer customer)
+        {
+            string apiUrl = GetPlacesURL(customer);
+
+            //objectis disposed as soon as it goes out of scope of using
+            using (HttpClient client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(apiUrl);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new System.Net.Http.Headers.MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.GetAsync(apiUrl);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    string data = await response.Content.ReadAsStringAsync();
+                    JObject jsonResults = JsonConvert.DeserializeObject<JObject>(data);
+                    JToken results = jsonResults["results"][0];
+                    JToken location = results["geometry"]["location"];
+
+                    var groceryStore = new { lat = location["lat"], lng = location["lng"] };
+
+                    //customer.streetAddress.Latitude = (double)location["lat"];
+                    //customer.streetAddress.Longitude = (double)location["lng"]
+                }
+            }
+            return customer;
         }
     }
 }
