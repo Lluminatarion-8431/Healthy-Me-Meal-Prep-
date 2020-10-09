@@ -19,10 +19,7 @@ namespace Healthy_Me.Controllers
         {
             _context = Context;
         }
-        //private async Task GetToDoItems()
-        //{
-          //  string response = await recipeAPI.GetStringAsync("");
-        //}
+
         // GET: NutritionProfile
         public ActionResult Index()
         {
