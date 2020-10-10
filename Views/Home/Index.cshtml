@@ -1,8 +1,52 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
+<style>
+    body {
+        background-image: url("https://i.postimg.cc/zvLhxttn/sport-active-running-fitness-background-1220-1011.jpg");
+        background-size: cover;
+    }
+    .bodyText {
+        color: white;
+        font-family: Arial;
+    }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+    .TextTop {
+        font-size: 20px;
+        position: absolute;
+    }
+
+    .TextBottom {
+        font-size: 50px;
+        font-weight: 700;
+        position: relative;
+        top: 10px;
+        right: 5px;
+    }
+
+    .signUP {
+        border: 1.3px solid;
+        width: 112px;
+        border-color: red;
+        font-weight: 700;
+        color: red;
+        position: relative;
+        bottom: 10px;
+        left: 150px;
+    }
+</style>
+<script>
+    function blinker() {
+        $('.blinking').fadeOut(500);
+        $('.blinking').fadeIn(500);
+    }
+    setInterval(blinker, 1000);
+</script>
+
+<body>
+</body>
+<div class="bodyText">
+    <p class="TextTop">Healthy Me</p>
+    <p class="TextBottom">FITNESS &amp; PREP</p>
+    <div class="blinking"><p class="signUP">&nbsp;SIGN-UP NOW!&nbsp;</p></div>
 </div>
